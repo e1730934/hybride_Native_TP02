@@ -16,11 +16,10 @@ export default function FiltreNomPodcast({nom, setNom}) {
                     value={nom}
                     onChange={(event) => {
                         setNom(event.target.value);
-                    }}
-                  />
+                    }}/>
                   <span className="icon is-small is-left">
-            <FontAwesomeIcon icon="fa-solid fa-podcast" />
-        </span>
+                    <FontAwesomeIcon icon="fa-solid fa-podcast"/>
+                  </span>
               </div>
           </div>
       </div>
