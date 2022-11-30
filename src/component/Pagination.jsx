@@ -35,48 +35,44 @@ export default function Pagination({podcast,  setPodcastPaginer}) {
 
     return (
       <div className="container">
-          <div className="level" style={{paddingTop: "20px"}}>
-              <div className="level-left">
-                  <div role="navigation" className="section">
+
                       <nav className="pagination" role="navigation" aria-label="pagination">
                           <button className={`pagination-previous ${currentPage === 1 ? "is-disabled" : ""}`}
                           onClick={() => {if (currentPage > 1) {setCurrentPage(currentPage - 1);}}}>&lt;
                           </button>
+                          <button className={`pagination-next ${currentPage === nbrPage ? "is-disabled" : ""}`}
+                                  onClick={() => {if (currentPage < nbrPage) {setCurrentPage(currentPage + 1);}}}>&gt;
+                          </button>
                           <ul className="pagination-list">
                               <li>
                                     {Array.from(Array(nbrPage).keys()).map((page) => (
-                                        <button
+                                        <a
                                             key={page}
                                             className={`pagination-link ${page + 1 === currentPage ? "is-current" : ""}`}
                                             onClick={() => setCurrentPage(page + 1)}>
                                             {page + 1}
-                                        </button>
+                                        </a>
                                     ))}
                               </li>
                           </ul>
-                          <button className={`pagination-next ${currentPage === nbrPage ? "is-disabled" : ""}`}
-                          onClick={() => {if (currentPage < nbrPage) {setCurrentPage(currentPage + 1);}}}>&gt;
-                          </button>
-                      </nav>
-                  </div>
-              </div>
 
-          <div className="level" style={{paddingTop: "20px"}}>
-              <div className="level-right">
-                  <div className="level-item">
+                      </nav>
+
+          <div className="level has-background-grey-light" style={{
+              paddingTop: "20px",
+              paddingBottom: "20px",
+          }}>
+                    <div className="level-item">
                       <div className="select">
                           <select value={nbrPodcastParPage.toString()}
                                   onChange={(e) => {handleNbrPodcastParPage(e);}}>
-                              <option value="8">8</option>
-                              <option value="16">12</option>
-                              <option value="24">24</option>
+                              <option value="8">08 Podcasts</option>
+                              <option value="16">12 Podcasts</option>
+                              <option value="24">24 Podcasts</option>
                           </select>
                       </div>
-                  </div>
-              </div>
-          </div>
+                    </div>
           </div>
       </div>
-
     );
 }
