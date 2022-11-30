@@ -1,33 +1,27 @@
-import logo from "./logo.svg";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+import React, {createContext, useState} from "react";
+import Footer from "./component/section/Footer.jsx";
+import Home from "./pages/Home.jsx";
 
-function App() {
+export const Context = createContext();
+
+export default function App() {
+    const [token, setToken] = useState(() => {
+        const localToken = window.localStorage.getItem("token");
+        if (localToken) {
+            return localToken;
+        }
+        return null;
+    });
     return (
-      <div className="App">
-          <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo"/>
-              <p>
-                  Edit <code>src/App.jsx</code> and save to reload.
-              </p>
-              <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                  Learn React
-              </a>
-              <a
-                className="App-link"
-                href="https://podcastsapi.herokuapp.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                  PodcastsAPI
-              </a>
-          </header>
-      </div>
+      <BrowserRouter>
+          <Context.Provider value={{token, setToken}}>
+              <Routes>
+                  <Route path="/" element={<Home/>}/>
+              </Routes>
+              <Footer/>
+          </Context.Provider>
+      </BrowserRouter>
     );
 }
-
-export default App;
