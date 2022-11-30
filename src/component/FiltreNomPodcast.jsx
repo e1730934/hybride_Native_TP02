@@ -1,8 +1,8 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPodcast} from "@fortawesome/free-solid-svg-icons";
-import * as fontawesome from "@fortawesome/fontawesome-svg-core";
+import {library} from "@fortawesome/fontawesome-svg-core";
 
-fontawesome.library.add(faPodcast);
+library.add(faPodcast);
 
 export default function FiltreNomPodcast({nom, setNom}) {
     return (
