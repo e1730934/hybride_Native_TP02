@@ -23,7 +23,6 @@ export default function Home(){
             if (res.ok) {
                 const data = await res.json();
                 setPodcast(data);
-                setPodcastFiltrer(data);
             } else {
                 console.log("Error Podcasts not loaded");
             }
