@@ -9,25 +9,25 @@ export default function Home(){
     const [nom, setNom] = useState("");
 
     useEffect(() => {
-        async function getPodcast() {
+        async function getPodcasts() {
             const res = await fetch(`${serveur}/podcasts/top`);
             if (res.ok) {
                 const data = await res.json();
                 setPodcast(data);
             } else {
-                console.log("Error Podcast not loaded");
+                console.log("Error Podcasts not loaded");
             }
         }
-        getPodcast().then(() => console.log("Podcast loaded"));
+        getPodcasts().then(() => console.log("Podcasts loaded"));
     }, []);
 
     return(
         <div className="container">
-            <div className="columns is-centered">
+            <div className="columns is-centered" style={{paddingTop:"20px",paddingBottom: "20px", paddingRight: "20px", paddingLeft:"20px"}}>
                 <FiltreNomPodcast nom={nom} setNom={setNom}/>
             </div>
             <div className="row columns is-multiline is-mobile">
-                {podcast.map((p) => <PodcastCard key={p.id} podcast={p}/>)}
+                {podcast.map((p) => <PodcastCard key={p.podcastId} podcast={p}/>)}
             </div>
         </div>
     );
