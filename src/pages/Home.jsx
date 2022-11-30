@@ -1,12 +1,21 @@
 import {useEffect, useState} from "react";
-import {serveur} from "../constantes.js";
+import {serveur} from "../constantes.jsx";
 import {PodcastCard} from "../component/PodcastCard";
 import FiltreNomPodcast from "../component/FiltreNomPodcast";
+import Pagination from "../component/Pagination";
 
 export default function Home(){
 
     const [podcast, setPodcast] = useState([]);
-    const [nom, setNom] = useState("");
+    const [podcastFiltrer, setPodcastFiltrer] = useState([]);
+    const [filtreNomPodcast, setFiltreNomPodcast] = useState("");
+    const [podcastPaginer, setPodcastPaginer] = useState([]);
+
+
+
+    useEffect(() => {
+        setPodcastFiltrer(podcast.filter(podcast => podcast.name.toLowerCase().includes(filtreNomPodcast.toLowerCase())));}
+      , [podcast,filtreNomPodcast]);
 
     useEffect(() => {
         async function getPodcasts() {
@@ -14,6 +23,7 @@ export default function Home(){
             if (res.ok) {
                 const data = await res.json();
                 setPodcast(data);
+                setPodcastFiltrer(data);
             } else {
                 console.log("Error Podcasts not loaded");
             }
@@ -24,11 +34,14 @@ export default function Home(){
     return(
         <div className="container">
             <div className="columns is-centered" style={{paddingTop:"20px",paddingBottom: "20px", paddingRight: "20px", paddingLeft:"20px"}}>
-                <FiltreNomPodcast nom={nom} setNom={setNom}/>
+                <FiltreNomPodcast nom={filtreNomPodcast} setNom={setFiltreNomPodcast}/>
             </div>
             <div className="row columns is-multiline is-mobile">
-                {podcast.map((p) => <PodcastCard key={p.podcastId} podcast={p}/>)}
+                {
+                    podcastPaginer.map((p) => <PodcastCard key={p.podcastId} podcast={p}/>)
+                }
             </div>
+            <Pagination podcast={podcastFiltrer} setPodcastPaginer={setPodcastPaginer}/>
         </div>
     );
 }

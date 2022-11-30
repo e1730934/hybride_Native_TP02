@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
 import React, {createContext, useState} from "react";
 import Footer from "./component/section/Footer.jsx";
 import Home from "./pages/Home.jsx";
+import DetailPodcast from "./pages/DetailPodcast.jsx";
 
 export const Context = createContext();
 
@@ -19,6 +19,7 @@ export default function App() {
           <Context.Provider value={{token, setToken}}>
               <Routes>
                   <Route path="/" element={<Home/>}/>
+                  <Route path="/podcast/:podcastId" element={<DetailPodcast/>}/>
               </Routes>
               <Footer/>
           </Context.Provider>
