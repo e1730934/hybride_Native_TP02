@@ -33,7 +33,7 @@ export default function Home(){
 
     return(
         <div className="container">
-            <div className="columns is-centered" style={{paddingTop:"20px",paddingBottom: "20px", paddingRight: "20px", paddingLeft:"20px"}}>
+            <div className="columns is-centered" style={{padding: "20px"}}>
                 <FiltreNomPodcast nom={filtreNomPodcast} setNom={setFiltreNomPodcast}/>
             </div>
             <div className="row columns is-multiline is-mobile">
