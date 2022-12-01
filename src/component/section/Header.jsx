@@ -20,7 +20,9 @@ export default function Header() {
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
-                <div className="navbar-item">&nbsp;</div>
+                <div className="navbar-item">
+                    <img src={"/public/m9.svg"} width="112" height="28" alt={"Logo Maisonneuve"}/>
+                </div>
                 <a
                     role="button"
                     className={"navbar-burger burger "}
@@ -33,8 +35,7 @@ export default function Header() {
                     <span aria-hidden="true"/>
                 </a>
             </div>
-            <div id="navbarBasicExample" className={`navbar-menu ${navbarToggle ? "is-active" : ""}`}
-            >
+            <div id="navbarBasicExample" className={`navbar-menu ${navbarToggle ? "is-active" : ""}`}>
                 <div className="navbar-start">
                     <Link to="/" className="navbar-item">HOME</Link>
                 </div>
