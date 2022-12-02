@@ -27,7 +27,6 @@ export default function Pagination({podcast,  setPodcastPaginer}) {
             }
             array[array.length - 1].push(podcast);
         });
-        //eslint-disable-next-line
         setPodcastPaginer(array[currentPage - 1]);
         setNbrPage(array.length);
         }
@@ -46,12 +45,12 @@ export default function Pagination({podcast,  setPodcastPaginer}) {
                           <ul className="pagination-list">
                               <li>
                                     {Array.from(Array(nbrPage).keys()).map((page) => (
-                                        <a
+                                        <button
                                             key={page}
                                             className={`pagination-link ${page + 1 === currentPage ? "is-current" : ""}`}
                                             onClick={() => setCurrentPage(page + 1)}>
                                             {page + 1}
-                                        </a>
+                                        </button>
                                     ))}
                               </li>
                           </ul>

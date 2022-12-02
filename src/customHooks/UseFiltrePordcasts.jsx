@@ -4,5 +4,5 @@ export function useFiltrePordcasts(setPodcastFiltrer, podcast, filtreNomPodcast)
     useEffect(() => {
           setPodcastFiltrer(podcast.filter(podcast => podcast.name.toLowerCase().includes(filtreNomPodcast.toLowerCase())));
       }
-      , [podcast, filtreNomPodcast]);
+      , [podcast, filtreNomPodcast,setPodcastFiltrer]);
 }

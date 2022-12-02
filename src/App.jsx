@@ -7,6 +7,7 @@ import Header from "./component/section/Header";
 import Login from "./pages/Login.jsx";
 import Profile from "./pages/Profile";
 import {Subscription} from "./pages/Subscription";
+import Signup from "./pages/Signup";
 
 export const Context = createContext();
 
@@ -26,7 +27,7 @@ export default function App() {
                   <Route path="/" element={<Home/>}/>
                   <Route path="/podcast/:podcastId" element={<DetailPodcast/>}/>
                   <Route path="/login" element={<Login/>}/>
-                  <Route path="/signup"/>
+                  <Route path="/signup" element={<Signup/>}/>
                   {
                     token !== null &&
                     <>

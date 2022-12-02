@@ -23,7 +23,7 @@ export default function Header() {
                 <Link to="/" className="navbar-item">
                     <img src={"/m9.svg"} width="112" height="28" alt={"Logo Maisonneuve"}/>
                 </Link>
-                <a
+                <div
                     role="button"
                     className={"navbar-burger burger "}
                     aria-label="menu"
@@ -33,7 +33,7 @@ export default function Header() {
                     <span aria-hidden="true"/>
                     <span aria-hidden="true"/>
                     <span aria-hidden="true"/>
-                </a>
+                </div>
             </div>
             <div id="navbarBasicExample" className={`navbar-menu ${navbarToggle ? "is-active" : ""}`}>
                 <div className="navbar-start">
@@ -46,6 +46,7 @@ export default function Header() {
                                 !token && (
                                     <div>
                                         <Link to="/login" className="button is-light">Login</Link>
+                                        <Link to="/signup" className="button is-light">Sign up</Link>
                                     </div>
                                 )
                             }
