@@ -5,6 +5,8 @@ import Home from "./pages/Home.jsx";
 import DetailPodcast from "./pages/DetailPodcast.jsx";
 import Header from "./component/section/Header";
 import Login from "./pages/Login.jsx";
+import Profile from "./pages/Profile";
+import {Subscription} from "./pages/Subscription";
 
 export const Context = createContext();
 
@@ -24,11 +26,13 @@ export default function App() {
                   <Route path="/" element={<Home/>}/>
                   <Route path="/podcast/:podcastId" element={<DetailPodcast/>}/>
                   <Route path="/login" element={<Login/>}/>
-                  {token !== null &&
-                    <div>
-                        <Route path="/profile"/>
-                        <Route path="/subscriptions"/>
-                    </div>
+                  <Route path="/signup"/>
+                  {
+                    token !== null &&
+                    <>
+                        <Route path="/profile" element={<Profile/>}/>
+                        <Route path="/subscriptions" element={<Subscription/>}/>
+                    </>
                   }
               </Routes>
               <Footer/>

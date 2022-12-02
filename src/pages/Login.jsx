@@ -32,10 +32,9 @@ export default function Login() {
                 localStorage.setItem("token", data.token);
             } else {
                 setError(resToken.message);
-                console.error("une erreur s'est produite");
             }
         } catch (err) {
-            console.log(err.message);
+            setError(err.message);
         }
     }
 

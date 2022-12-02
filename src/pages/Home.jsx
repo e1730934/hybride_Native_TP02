@@ -1,8 +1,9 @@
-import {useEffect, useState} from "react";
-import {serveur} from "../constantes.jsx";
+import {useState} from "react";
 import {PodcastCard} from "../component/PodcastCard";
 import FiltreNomPodcast from "../component/FiltreNomPodcast";
 import Pagination from "../component/Pagination";
+import {useLoadPodcasts} from "../customHooks/UseLoadPodcasts.jsx";
+import {useFiltrePordcasts} from "../customHooks/UseFiltrePordcasts.jsx";
 
 export default function Home(){
 
@@ -12,23 +13,8 @@ export default function Home(){
     const [podcastPaginer, setPodcastPaginer] = useState([]);
 
 
-
-    useEffect(() => {
-        setPodcastFiltrer(podcast.filter(podcast => podcast.name.toLowerCase().includes(filtreNomPodcast.toLowerCase())));}
-      , [podcast,filtreNomPodcast]);
-
-    useEffect(() => {
-        async function getPodcasts() {
-            const res = await fetch(`${serveur}/podcasts/top`);
-            if (res.ok) {
-                const data = await res.json();
-                setPodcast(data);
-            } else {
-                console.log("Error Podcasts not loaded");
-            }
-        }
-        getPodcasts().then(() => console.log("Podcasts loaded"));
-    }, []);
+    useLoadPodcasts(setPodcast);
+    useFiltrePordcasts(setPodcastFiltrer, podcast, filtreNomPodcast);
 
     return(
         <div className="container">
