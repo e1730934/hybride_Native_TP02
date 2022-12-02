@@ -1,31 +1,59 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {serveur} from "../constantes.jsx";
+import {useValidationEmail} from "../customHooks/UseValidationSignUp.jsx";
 
 export default function Signup() {
-
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
+
+    const [validationEmail, setValidationEmail] = useState({
+        containsAt: false,
+    });
     const navigate = useNavigate();
 
+    const validationResult = {
+        password: {
+            lengthOk: false,
+            symbols: false,
+            upperCase: false,
+            lowerCase: false,
+        },
+        passwordConfirm: {
+            match: false,
+        }
+    };
+    useValidationEmail(email, setValidationEmail);
 
-    function handleSetEmail(e) {
-        setEmail(e.target.value);
+
+    async function signUp() {
+        if (validationResult !== null) {
+            await fetch(`${serveur}/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            })
+              .then((response) => {
+                  if (response.ok) {
+                      navigate("/login");
+                  } else {
+                      setError(response.message);
+                  }
+              })
+              .catch((e) => {
+                  setError(`Erreur lors de l'inscription \n${e.message}`);
+              });
+        }
     }
 
-    function handleSetPassword(e) {
-        setPassword(e.target.value);
-    }
-
-    function handleSetPasswordConfirm(e) {
-        setPasswordConfirm(e.target.value);
-    }
-    function signUp(){
-
-    }
-    function annuler(){
+    function annuler() {
         navigate("/");
     }
 
@@ -35,14 +63,11 @@ export default function Signup() {
               <div className="content">
                   <div className="messages" tabIndex="0">
                       {error &&
-                        <div className="message is-danger" style="white-space: pre;
-                    border-color: red; border-width: 2px; border-style: solid;">
+                        <div className="message is-danger" style={{
+                            whiteSpace: "pre", borderColor: "red",
+                            borderWidth: "2px", borderStyle: "solid"
+                        }}>
                             <p role="alert" className="message-body">{error}</p>
-                        </div>
-                      }
-                      {success &&
-                        <div className="message is-success">
-                            <p role="alert" className="message-body">{success}</p>
                         </div>
                       }
                   </div>
@@ -55,11 +80,12 @@ export default function Signup() {
                                          className="input" autoComplete="email"
                                          required aria-required="true"
                                          aria-describedby="descriptionEmail"
-                                         onClick={handleSetEmail}/>
+                                         onChange={(e) => setEmail(e.target.value)}/>
                                   <span className="icon is-small is-left">
                                     <i className="fa fa-envelope"></i></span>
-                                  <span id="descriptionEmail" className="help is-success">
-                                Le courriel de l'utilisateur.</span>
+                                  <span id="descriptionEmail"
+                                        className={`help ${validationEmail.containsAt ? "is-success " : "is-danger"}`}>
+                                      Le courriel doit contenir contient le caractère @.</span>
                               </div>
                           </div>
                           <div className="field">
@@ -70,12 +96,19 @@ export default function Signup() {
                                          autoComplete="password"
                                          required aria-required="true"
                                          aria-describedby="descriptionMdp"
-                                         onClick={handleSetPassword}/>
+                                         onChange={(e) => setPassword(e.target.value)}/>
                                   <span className="icon is-small is-left">
                                     <i className="fa fa-lock"></i></span>
                                   <span id="descriptionMdp" className="help is-success">
-                                Le mot de passe doit contenir au moins 6 caractères.
-                            </span>
+                                Le mot de passe de l&apos;utilisateur.</span>
+                                  <span id="descriptionMdp" className="help is-danger">
+                                Le mot de passe contient au moins 8 caractères.</span>
+                                  <span id="descriptionMdp" className="help is-danger">
+                                Le mot de passe contient au moins un symbole parmi les suivants: !@#$%&*()[]</span>
+                                  <span id="descriptionMdp" className="help is-danger">
+                                Le mot de passe contient au moins une lettre en majuscule.</span>
+                                  <span id="descriptionMdp" className="help is-danger">
+                                Le mot de passe contient au moins une lettre en minuscule.</span>
                               </div>
                           </div>
                           <div className="field">
@@ -87,7 +120,7 @@ export default function Signup() {
                                          autoComplete="password"
                                          required aria-required="true"
                                          aria-describedby="descriptionMdp"
-                                         onClick={handleSetPasswordConfirm}/>
+                                         onChange={(e) => setPasswordConfirm(e.target.value)}/>
                                   <span className="icon is-small is-left">
                                     <i className="fa fa-lock"></i></span>
                               </div>
@@ -95,7 +128,8 @@ export default function Signup() {
                           <div className="field">
                               <div className="buttons">
                                   <button id="connexion" className="button is-success"
-                                          onClick={signUp}> Connexion</button>
+                                          onClick={signUp}> Connexion
+                                  </button>
                                   <button className="button is-danger" onClick={annuler}>Annuler</button>
                               </div>
                           </div>
@@ -105,5 +139,4 @@ export default function Signup() {
           </div>
       </div>
     );
-
 }
