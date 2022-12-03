@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {serveur} from "../constantes.jsx";
-import {useValidationEmail} from "../customHooks/UseValidationSignUp.jsx";
+import {useValidationSignUp} from "../customHooks/UseValidationSignUp.jsx";
 
 export default function Signup() {
     const [error, setError] = useState(null);
@@ -9,24 +9,23 @@ export default function Signup() {
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
 
+
+
     const [validationEmail, setValidationEmail] = useState({
         containsAt: false,
     });
+    const [validationPassword,setValidationPassword] = useState({
+        containsNumber: false,
+        containsUppercase: false,
+        containsLowercase: false,
+        containsSpecial: false,
+        containsRightLength: false,
+        match: false,
+
+    });
     const navigate = useNavigate();
 
-    const validationResult = {
-        password: {
-            lengthOk: false,
-            symbols: false,
-            upperCase: false,
-            lowerCase: false,
-        },
-        passwordConfirm: {
-            match: false,
-        }
-    };
-    useValidationEmail(email, setValidationEmail);
-
+    useValidationSignUp(email, password, passwordConfirm, setValidationEmail, setValidationPassword, setError, navigate);
 
     async function signUp() {
         if (validationResult !== null) {
