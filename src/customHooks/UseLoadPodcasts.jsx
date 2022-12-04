@@ -12,6 +12,6 @@ export function useLoadPodcasts(setPodcast) {
                 console.log("Error Podcasts not loaded");
             }
         }
-        getPodcasts().then(() => console.log("Podcasts loaded"));
+        getPodcasts();
     }, [setPodcast]);
 }

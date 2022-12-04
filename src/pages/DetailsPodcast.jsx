@@ -2,6 +2,7 @@ import {useParams} from "react-router-dom";
 import {useState} from "react";
 import {useLoadPodcastDetails} from "../customHooks/UseLoadPodcastDetails.jsx";
 import Pagination from "../component/Pagination";
+import {EpisodeComponent} from "../component/EpisodeComponent.jsx";
 
 export default function DetailsPodcast() {
     const {podcastId} = useParams();
@@ -48,27 +49,7 @@ export default function DetailsPodcast() {
                                   <div className={"columns is-multiline"}>
                                       {
                                         podcastEpisodesPaginer && podcastEpisodesPaginer.map((episode) =>
-                                            <div key={episode.episodeId} className="column is-12">
-                                                <div className="card">
-                                                    <div className="card-content">
-                                                        <div className="media">
-                                                            <div className="media-content">
-                                                                <p className="title is-4">{episode.title}</p>
-                                                                <p className="subtitle is-6">{episode.isoDate}</p>
-                                                                <p className={"subtitle is-6 has-text-justified"}>{episode.content}</p>
-                                                                <audio style={{
-                                                                    width: "100%",
-                                                                    height: "50px",
-                                                                    borderRadius: "5px"}} controls preload={"metadata"}>
-                                                                    <source src={episode
-                                                                        .audioUrl} type="audio/mpeg"/>
-                                                                </audio>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <EpisodeComponent key={episode.episodeId} episode={episode}/>
                                         )
                                       }
                                   </div>

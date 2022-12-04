@@ -11,6 +11,6 @@ export function useLoadPodcastDetails(podcastId, setPodcastInfo) {
             }
         }
 
-        getPodcastInfo().then(() => console.log(`Podcast ${podcastId} loaded`));
+        getPodcastInfo();
     }, [podcastId]);
 }

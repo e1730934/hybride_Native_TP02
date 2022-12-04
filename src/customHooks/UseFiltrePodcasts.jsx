@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 
-export function useFiltrePordcasts(setPodcastFiltrer, podcast, filtreNomPodcast) {
+export function useFiltrePodcasts(setPodcastFiltrer, podcast, filtreNomPodcast) {
     useEffect(() => {
           setPodcastFiltrer(podcast.filter(podcast => podcast.name.toLowerCase().includes(filtreNomPodcast.toLowerCase())));
       }

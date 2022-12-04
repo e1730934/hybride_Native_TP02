@@ -3,7 +3,7 @@ import {PodcastCard} from "../component/PodcastCard";
 import FiltreNomPodcast from "../component/FiltreNomPodcast";
 import Pagination from "../component/Pagination";
 import {useLoadPodcasts} from "../customHooks/UseLoadPodcasts.jsx";
-import {useFiltrePordcasts} from "../customHooks/UseFiltrePordcasts.jsx";
+import {useFiltrePodcasts} from "../customHooks/UseFiltrePodcasts.jsx";
 
 export default function Home(){
 
@@ -14,7 +14,7 @@ export default function Home(){
 
 
     useLoadPodcasts(setPodcast);
-    useFiltrePordcasts(setPodcastFiltrer, podcast, filtreNomPodcast);
+    useFiltrePodcasts(setPodcastFiltrer, podcast, filtreNomPodcast);
 
     return(
         <div className="container">
