@@ -1,6 +1,6 @@
 import {ProfileComponent} from "../component/ProfileComponent";
 import {useContext, useState} from "react";
-import {useValidationEmail, useValidationPassword} from "../customHooks/UseValidationSignUp.jsx";
+import {useValidationEmail, useValidationPassword} from "../customHooks/UseValidationProfile.jsx";
 import {useNavigate} from "react-router-dom";
 import {Context} from "../App.jsx";
 

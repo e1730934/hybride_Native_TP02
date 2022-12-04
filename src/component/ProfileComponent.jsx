@@ -20,7 +20,8 @@ export function ProfileComponent(props) {
                         <div className="field">
                             <label htmlFor="email" className="label">Email</label>
                             <div className="control has-icons-left">
-                                <input id="email" type="email" placeholder="e1234567@site.com"
+                                <input id="email" type="email" defaultValue={props.defaultValues.email}
+                                       placeholder="e1234567@site.com"
                                        className="input" autoComplete="email"
                                        required aria-required="true"
                                        aria-describedby="descriptionEmail"
@@ -36,7 +37,7 @@ export function ProfileComponent(props) {
                         <div className="field">
                             <label htmlFor="password" className="label">Mot de passe</label>
                             <div className="control has-icons-left">
-                                <input id="password" type="password"
+                                <input id="password" type="password" defaultValue={props.defaultValues.password}
                                        placeholder="*******" className="input"
                                        autoComplete="password"
                                        required aria-required="true"
@@ -49,14 +50,14 @@ export function ProfileComponent(props) {
                                 <span id="descriptionMdp"
                                       className={`help ${props.validation.passwordRequirementValue.containsRightLength ? "is-success " : "is-danger"}`}>
                                 Le mot de passe contient au moins 8 caractères.</span>
-                                <span id="descriptionMdp"
-                                      className={`help ${props.validation.passwordRequirementValue.containsSpecial ? "is-success " : "is-danger"}`}>
+                                      <span id="descriptionMdp"
+                                            className={`help ${props.validation.passwordRequirementValue.containsSpecial ? "is-success " : "is-danger"}`}>
                                 Le mot de passe contient au moins un symbole parmi les suivants: !@#$%&*()[]</span>
-                                <span id="descriptionMdp"
-                                      className={`help ${props.validation.passwordRequirementValue.containsUppercase ? "is-success " : "is-danger"}`}>
+                                      <span id="descriptionMdp"
+                                            className={`help ${props.validation.passwordRequirementValue.containsUppercase ? "is-success " : "is-danger"}`}>
                                 Le mot de passe contient au moins une lettre en majuscule.</span>
-                                <span id="descriptionMdp"
-                                      className={`help ${props.validation.passwordRequirementValue.containsLowercase ? "is-success " : "is-danger"}`}>
+                                      <span id="descriptionMdp"
+                                            className={`help ${props.validation.passwordRequirementValue.containsLowercase ? "is-success " : "is-danger"}`}>
                                 Le mot de passe contient au moins une lettre en minuscule.</span>
                                   </div>}
                             </div>
@@ -65,7 +66,7 @@ export function ProfileComponent(props) {
                             <label htmlFor="confirmPassword" className="label">
                                 Confirmation mot de passe</label>
                             <div className="control has-icons-left">
-                                <input id="confirmPassword" type="password"
+                                <input id="confirmPassword" type="password" defaultValue={props.defaultValues.confirmPassword}
                                        placeholder="*******" className="input"
                                        autoComplete="password"
                                        required aria-required="true"
@@ -81,6 +82,7 @@ export function ProfileComponent(props) {
                         <div className="field">
                             <div className="buttons">
                                 <button id="connexion" className="button is-success"
+                                        disabled={props.error}
                                         onClick={props.actionCall}> {props.actionLabel}
                                 </button>
                                 <button className="button is-danger" onClick={annuler}>Annuler</button>

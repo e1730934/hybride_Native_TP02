@@ -52,3 +52,15 @@ export function useValidationPassword(password, passwordConfirm, setValidationRe
         }
     }, [password, passwordConfirm]);
 }
+
+export function useCheckError(emailRequirementValue, passwordRequirementValue, setError) {
+    useEffect(() => {
+        if (emailRequirementValue.containsAt && passwordRequirementValue.containsUppercase
+          && passwordRequirementValue.containsLowercase && passwordRequirementValue.containsSpecial
+          && passwordRequirementValue.containsRightLength && passwordRequirementValue.match) {
+            setError(false);
+        } else {
+            setError(true);
+        }
+    }, [emailRequirementValue, passwordRequirementValue]);
+}
