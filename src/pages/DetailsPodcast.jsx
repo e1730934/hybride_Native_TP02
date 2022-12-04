@@ -47,7 +47,7 @@ export default function DetailsPodcast() {
                                   <h2 className={"title is-2"}>Episodes</h2>
                                   <div className={"columns is-multiline"}>
                                       {
-                                        podcastEpisodesPaginer && podcastEpisodesPaginer.map((episode, index) =>
+                                        podcastEpisodesPaginer && podcastEpisodesPaginer.map((episode) =>
                                             <div key={episode.episodeId} className="column is-12">
                                                 <div className="card">
                                                     <div className="card-content">
