@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {serveur} from "../constantes.jsx";
 
-export function useSubscribe(podcastId, setSubscribe, token) {
+export function usePodcastSubscribeState(podcastId, setSubscribe, token) {
     useEffect(() => {
         async function getIsSubscribe() {
             if (token) {

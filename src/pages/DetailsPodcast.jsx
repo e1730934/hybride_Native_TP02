@@ -3,7 +3,7 @@ import {useContext, useState} from "react";
 
 import EpisodeComponent from "../component/EpisodeComponent.jsx";
 import Pagination from "../component/Pagination";
-import {useSubscribe} from "../customHooks/UseSubscribe.jsx";
+import {usePodcastSubscribeState} from "../customHooks/UsePodcastSubscribeState.jsx";
 import useLoadPodcastDetails from "../customHooks/UseLoadPodcastDetails.jsx";
 import {Context} from "../App.jsx";
 import {serveur} from "../constantes.jsx";
@@ -16,7 +16,7 @@ export default function DetailsPodcast() {
     const {token} = useContext(Context);
 
     useLoadPodcastDetails(podcastId, setPodcastInfo);
-    useSubscribe(podcastId, setIsSubscribe, token);
+    usePodcastSubscribeState(podcastId, setIsSubscribe, token);
 
     async function toggleSubscribe() {
         if (token) {

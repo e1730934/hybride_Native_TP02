@@ -1,6 +1,6 @@
 import {useContext, useState} from "react";
 import {Context} from "../App.jsx";
-import {useGetSubscribedPodcast} from "../customHooks/UseSubscribe.jsx";
+import {useGetSubscribedPodcast} from "../customHooks/UsePodcastSubscribeState.jsx";
 import {PodcastCard} from "../component/PodcastCard.jsx";
 import Pagination from "../component/Pagination";
 
