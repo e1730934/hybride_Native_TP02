@@ -27,7 +27,7 @@ export default function DetailsPodcast() {
                                   <div className="media-content">
                                       <p className="title is-4">{podcastInfo.name}</p>
                                       <p className="subtitle is-6">{podcastInfo.artist}</p>
-                                      <p className="subtitle is-6">{podcastInfo.description}</p>
+                                      <p className="subtitle is-6 has-text-justified">{podcastInfo.description}</p>
                                       {
                                         Array.isArray(podcastInfo.genres) && podcastInfo.genres.length > 0 && (
                                           podcastInfo.genres.map((genre, index) => {
