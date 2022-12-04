@@ -1,4 +1,4 @@
-export function EpisodeComponent(props) {
+export default function EpisodeComponent(props) {
     return <div className="column is-12">
         <div className="card">
             <div className="card-content">

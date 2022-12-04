@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {serveur} from "../constantes.jsx";
 
-export function useLoadPodcastDetails(podcastId, setPodcastInfo) {
+export default function useLoadPodcastDetails(podcastId, setPodcastInfo) {
     useEffect(() => {
         async function getPodcastInfo() {
             const res = await fetch(`${serveur}/podcast?podcastId=${podcastId}`);
@@ -12,5 +12,5 @@ export function useLoadPodcastDetails(podcastId, setPodcastInfo) {
         }
 
         getPodcastInfo();
-    }, [podcastId]);
+    }, [podcastId, setPodcastInfo]);
 }

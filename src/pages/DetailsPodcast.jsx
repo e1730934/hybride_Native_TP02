@@ -1,20 +1,39 @@
 import {useParams} from "react-router-dom";
-import {useState} from "react";
-import {useLoadPodcastDetails} from "../customHooks/UseLoadPodcastDetails.jsx";
+import {useContext, useState} from "react";
+
+import EpisodeComponent from "../component/EpisodeComponent.jsx";
 import Pagination from "../component/Pagination";
-import {EpisodeComponent} from "../component/EpisodeComponent.jsx";
+import useGetSubscribe from "../customHooks/UseGetSubscribe.jsx";
+import useLoadPodcastDetails from "../customHooks/UseLoadPodcastDetails.jsx";
+import {Context} from "../App.jsx";
+import {serveur} from "../constantes.jsx";
 
 export default function DetailsPodcast() {
     const {podcastId} = useParams();
     const [podcastInfo, setPodcastInfo] = useState({});
     const [podcastEpisodesPaginer, setPodcastEpisodesPaginer] = useState([]);
-
+    const [isSubscribe, setIsSubscribe] = useState(false);
+    const {token} = useContext(Context);
 
     useLoadPodcastDetails(podcastId, setPodcastInfo);
+    useGetSubscribe(podcastId, setIsSubscribe, token);
+
+    async function toggleSubscribe() {
+        if (token) {
+            const bearerToken = `bearer ${token}`;
+            const res = await fetch(`${serveur}/subscription?podcastId=${podcastId}`, {
+                method: isSubscribe ? "DELETE" : "POST",
+                headers: {authorization: bearerToken},
+            });
+            if (res.ok) {
+                setIsSubscribe(!isSubscribe);
+            }
+        }
+    }
 
     return (
       <div className="section has-text-centered">
-          <div className="container" style={{marginBottom:"20px"}}>
+          <div className="container" style={{marginBottom: "20px"}}>
               <div className="columns">
                   <div className="column is-4">
                       <div className="card">
@@ -28,7 +47,12 @@ export default function DetailsPodcast() {
                                   <div className="media-content">
                                       <p className="title is-4">{podcastInfo.name}</p>
                                       <p className="subtitle is-6">{podcastInfo.artist}</p>
-                                      <p className="subtitle is-6 has-text-justified">{podcastInfo.description}</p>
+                                      <button
+                                        className={`button is-rounded is-fullwidth ${isSubscribe ? "is-danger" : "is-success"}`}
+                                        onClick={toggleSubscribe}>{isSubscribe ? "Se désabonner" : "S'abonner"}
+                                      </button>
+                                      <p className="subtitle is-6 has-text-justified"
+                                         style={{paddingTop: "20px"}}>{podcastInfo.description}</p>
                                       {
                                         Array.isArray(podcastInfo.genres) && podcastInfo.genres.length > 0 && (
                                           podcastInfo.genres.map((genre, index) => {
@@ -49,7 +73,7 @@ export default function DetailsPodcast() {
                                   <div className={"columns is-multiline"}>
                                       {
                                         podcastEpisodesPaginer && podcastEpisodesPaginer.map((episode) =>
-                                            <EpisodeComponent key={episode.episodeId} episode={episode}/>
+                                          <EpisodeComponent key={episode.episodeId} episode={episode}/>
                                         )
                                       }
                                   </div>
