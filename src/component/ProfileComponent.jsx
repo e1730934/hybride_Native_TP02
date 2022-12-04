@@ -1,7 +1,17 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React from "react";
+import {faEnvelope, faLock} from "@fortawesome/free-solid-svg-icons";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {useNavigate} from "react-router-dom";
+
+library.add(faEnvelope, faLock);
 
 export function ProfileComponent(props) {
+    const navigate = useNavigate();
+
+    function annuler() {
+        navigate("/");
+    }
+
     return <div className="container">
         <div className="section">
             <div className="content">
@@ -14,13 +24,13 @@ export function ProfileComponent(props) {
                                        className="input" autoComplete="email"
                                        required aria-required="true"
                                        aria-describedby="descriptionEmail"
-                                       onChange={props.onChange}/>
+                                       onChange={(e) => props.setter.setEmail(e.target.value)}/>
                                 <span className="icon is-small is-left">
-                                     <FontAwesomeIcon icon="fa-solid fa-envelope"/>
-                                  </span>
-                                <span id="descriptionEmail"
-                                      className={`help ${props.emailRequirementValue.containsAt ? "is-success " : "is-danger"}`}>
-                                      Le courriel doit contenir contient le caractère @.</span>
+                                    <FontAwesomeIcon icon="fa-solid fa-envelope"/></span>
+                                {props.validation.emailRequirementValue &&
+                                  <span id="descriptionEmail"
+                                        className={`help ${props.validation.emailRequirementValue.containsAt ? "is-success " : "is-danger"}`}>
+                                    Le courriel doit contenir contient le caractère @.</span>}
                             </div>
                         </div>
                         <div className="field">
@@ -31,22 +41,24 @@ export function ProfileComponent(props) {
                                        autoComplete="password"
                                        required aria-required="true"
                                        aria-describedby="descriptionMdp"
-                                       onChange={props.onChange1}/>
+                                       onChange={(e) => props.setter.setPassword(e.target.value)}/>
                                 <span className="icon is-small is-left">
-                                    <FontAwesomeIcon icon="fa-solid fa-lock"/></span>
-
-                                <span id="descriptionMdp" className={
-                                    `help ${props.passwordRequirementValue.containsRightLength ? "is-success " : "is-danger"}`}>
+                                     <FontAwesomeIcon icon="fa-solid fa-lock"/></span>
+                                {props.validation.passwordRequirementValue &&
+                                  <div>
+                                <span id="descriptionMdp"
+                                      className={`help ${props.validation.passwordRequirementValue.containsRightLength ? "is-success " : "is-danger"}`}>
                                 Le mot de passe contient au moins 8 caractères.</span>
-                                <span id="descriptionMdp" className={
-                                    `help ${props.passwordRequirementValue.containsSpecial ? "is-success " : "is-danger"}`}>
+                                <span id="descriptionMdp"
+                                      className={`help ${props.validation.passwordRequirementValue.containsSpecial ? "is-success " : "is-danger"}`}>
                                 Le mot de passe contient au moins un symbole parmi les suivants: !@#$%&*()[]</span>
-                                <span id="descriptionMdp" className={
-                                    `help ${props.passwordRequirementValue.containsUppercase ? "is-success " : "is-danger"}`}>
+                                <span id="descriptionMdp"
+                                      className={`help ${props.validation.passwordRequirementValue.containsUppercase ? "is-success " : "is-danger"}`}>
                                 Le mot de passe contient au moins une lettre en majuscule.</span>
                                 <span id="descriptionMdp"
-                                      className={`help ${props.passwordRequirementValue.containsLowercase ? "is-success " : "is-danger"}`}>
+                                      className={`help ${props.validation.passwordRequirementValue.containsLowercase ? "is-success " : "is-danger"}`}>
                                 Le mot de passe contient au moins une lettre en minuscule.</span>
+                                  </div>}
                             </div>
                         </div>
                         <div className="field">
@@ -58,21 +70,20 @@ export function ProfileComponent(props) {
                                        autoComplete="password"
                                        required aria-required="true"
                                        aria-describedby="descriptionMdp"
-                                       onChange={props.onChange2}/>
+                                       onChange={(e) => props.setter.setPasswordConfirm(e.target.value)}/>
                                 <span className="icon is-small is-left">
-                                    <FontAwesomeIcon icon="fa-solid fa-lock"/></span>
-
-                                <span
-                                  className={`help ${props.passwordRequirementValue.match ? "is-success " : "is-danger"}`}>
-                                        Les mots de passe doivent être identiques.</span>
+                                     <FontAwesomeIcon icon="fa-solid fa-lock"/></span>
                             </div>
+                            <span
+                              className={`help ${props.validation.passwordRequirementValue.match ? "is-success " : "is-danger"}`}>
+                                        Les mots de passe doivent être identiques.</span>
                         </div>
                         <div className="field">
                             <div className="buttons">
                                 <button id="connexion" className="button is-success"
-                                        onClick={props.onClick}> Inscription
+                                        onClick={props.actionCall}> {props.actionLabel}
                                 </button>
-                                <button className="button is-danger" onClick={props.onClick1}>Annuler</button>
+                                <button className="button is-danger" onClick={annuler}>Annuler</button>
                             </div>
                         </div>
                     </form>
