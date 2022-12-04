@@ -1,34 +1,40 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {serveur} from "../constantes.jsx";
 import {useValidationSignUp} from "../customHooks/UseValidationSignUp.jsx";
 
 export default function Signup() {
-    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessageDetail, setErrorMessageDetail] = useState("");
+    const [errorMessageDetailDisplayed, setErrorMessageDetailDisplayed] = useState(false);
+
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
 
-
-
-    const [validationEmail, setValidationEmail] = useState({
+    const [emailRequirementValue, setEmailRequirementValue] = useState({
         containsAt: false,
     });
-    const [validationPassword,setValidationPassword] = useState({
+    const [passwordRequirementValue, setPasswordRequirementValue] = useState({
         containsNumber: false,
         containsUppercase: false,
         containsLowercase: false,
         containsSpecial: false,
         containsRightLength: false,
         match: false,
-
     });
-    const navigate = useNavigate();
-
-    useValidationSignUp(email, password, passwordConfirm, setValidationEmail, setValidationPassword, setError, navigate);
+    useValidationSignUp(email, password, passwordConfirm, emailRequirementValue, setEmailRequirementValue, passwordRequirementValue, setPasswordRequirementValue, setError, setErrorMessage);
 
     async function signUp() {
-        if (validationResult !== null) {
+        console.log("signUp");
+        console.log(`error: ${error}
+        errorMessage: ${errorMessage}
+        errorMessageDetail: ${errorMessageDetail}
+        errorMessageDetailDisplayed: ${errorMessageDetailDisplayed}`);
+        if (error === false) {
             await fetch(`${serveur}/auth/register`, {
                 method: "POST",
                 headers: {
@@ -50,6 +56,10 @@ export default function Signup() {
                   setError(`Erreur lors de l'inscription \n${e.message}`);
               });
         }
+        else{
+            setErrorMessageDetail(errorMessage);
+            setErrorMessageDetailDisplayed(true);
+        }
     }
 
     function annuler() {
@@ -61,13 +71,19 @@ export default function Signup() {
           <div className="section">
               <div className="content">
                   <div className="messages" tabIndex="0">
-                      {error &&
-                        <div className="message is-danger" style={{
-                            whiteSpace: "pre", borderColor: "red",
-                            borderWidth: "2px", borderStyle: "solid"
-                        }}>
-                            <p role="alert" className="message-body">{error}</p>
-                        </div>
+                      {
+                        errorMessageDetailDisplayed &&
+                        <article className={`message is-danger ${(errorMessageDetailDisplayed===true)  ? "is-hidden" : ""}`}>
+                            <div className="message-header">
+                                <p>Erreur</p>
+                                <button className="delete" aria-label="delete" onClick={
+                                    () => setErrorMessageDetail("")
+                                }></button>
+                            </div>
+                            <div className="message-body">
+                                {errorMessageDetail}
+                            </div>
+                        </article>
                       }
                   </div>
                   <main>
@@ -83,7 +99,7 @@ export default function Signup() {
                                   <span className="icon is-small is-left">
                                     <i className="fa fa-envelope"></i></span>
                                   <span id="descriptionEmail"
-                                        className={`help ${validationEmail.containsAt ? "is-success " : "is-danger"}`}>
+                                        className={`help ${emailRequirementValue.containsAt ? "is-success " : "is-danger"}`}>
                                       Le courriel doit contenir contient le caractère @.</span>
                               </div>
                           </div>
@@ -127,7 +143,7 @@ export default function Signup() {
                           <div className="field">
                               <div className="buttons">
                                   <button id="connexion" className="button is-success"
-                                          onClick={signUp}> Connexion
+                                          onClick={signUp}> Inscription
                                   </button>
                                   <button className="button is-danger" onClick={annuler}>Annuler</button>
                               </div>

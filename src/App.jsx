@@ -2,7 +2,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import React, {createContext, useState} from "react";
 import Footer from "./component/section/Footer.jsx";
 import Home from "./pages/Home.jsx";
-import DetailPodcast from "./pages/DetailPodcast.jsx";
+import DetailsPodcast from "./pages/DetailsPodcast.jsx";
 import Header from "./component/section/Header";
 import Login from "./pages/Login.jsx";
 import Profile from "./pages/Profile";
@@ -25,7 +25,7 @@ export default function App() {
               <Header/>
               <Routes>
                   <Route path="/" element={<Home/>}/>
-                  <Route path="/podcast/:podcastId" element={<DetailPodcast/>}/>
+                  <Route path="/podcast/:podcastId" element={<DetailsPodcast/>}/>
                   <Route path="/login" element={<Login/>}/>
                   <Route path="/signup" element={<Signup/>}/>
                   {

@@ -26,7 +26,7 @@ export default function Home(){
                     podcastPaginer.map((p) => <PodcastCard key={p.podcastId} podcast={p}/>)
                 }
             </div>
-            <Pagination podcast={podcastFiltrer} setPodcastPaginer={setPodcastPaginer}/>
+            <Pagination element={podcastFiltrer} setElement={setPodcastPaginer}/>
         </div>
     );
 }

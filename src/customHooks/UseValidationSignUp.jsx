@@ -1,5 +1,4 @@
-import {useEffect, useState} from "react";
-
+import {useEffect} from "react";
 
 
 function useValidationEmail(email, setValidationResultEmail) {
@@ -61,47 +60,35 @@ function useValidationPassword(password, passwordConfirm, setValidationResultPas
     }, [password, passwordConfirm]);
 }
 
-    export function useValidationSignUp(email, password, passwordConfirm, setValidationResultEmail, setValidationResultPassword) {
-        const[validationResult, setValidationResult] = useState(false);
-        const [emailRequirementValue, setEmailRequirementValue] = useState({
-            containsAt: false,
-        });
-        const [passwordRequirementValue, setPasswordRequirementValue] = useState({
-            containsNumber: false,
-            containsUppercase: false,
-            containsLowercase: false,
-            containsSpecial: false,
-            containsRightLength: false,
-            match: false,
+export function useValidationSignUp(email, password, passwordConfirm, emailRequirementValue,
+                                    setEmailRequirementValue, passwordRequirementValue, setPasswordRequirementValue, setError, setErrorMessage) {
+    useValidationEmail(email, setEmailRequirementValue);
+    useValidationPassword(password, passwordConfirm, setPasswordRequirementValue);
 
+    useEffect(() => {
+        setErrorMessage("");
+        let errorEmail = false;
+        let errorPassword = false;
+        Object.values(emailRequirementValue).forEach((value) => {
+            if (value === false) {
+                errorEmail = true;
+                console.log(`emailRequirementValue: ${value}`);
+            }
         });
-
-        useEffect(() => {
-            if (emailRequirementValue.containsAt &&
-                passwordRequirementValue.containsNumber &&
-                passwordRequirementValue.containsUppercase &&
-                passwordRequirementValue.containsLowercase &&
-                passwordRequirementValue.containsSpecial &&
-                passwordRequirementValue.containsRightLength &&
-                passwordRequirementValue.match) {
-                setValidationResult(true);
-            } else {
-                setValidationResult(false);
+        Object.values(passwordRequirementValue).forEach((value) => {
+            if (value === false) {
+                console.log(`password RequirementValue: ${value}`);
+                errorPassword = true;
             }
-        },[]);
-        useEffect(() => {
-            if (validationResultEmail.containsAt === true &&
-                validationResultPassword.containsNumber === true &&
-                validationResultPassword.containsUppercase === true &&
-                validationResultPassword.containsLowercase === true &&
-                validationResultPassword.containsSpecial === true &&
-                validationResultPassword.containsRightLength === true &&
-                validationResultPassword.match === true) {
-                setValidationResult(true);
-            } else {
-                setValidationResult(false);
+        });
+        if (errorEmail === true || errorPassword === true) {
+            setError(true);
+            if (errorEmail === true) {
+                setErrorMessage("Email non valide");
             }
-        }, [validationResultEmail, validationResultPassword]);
-        useValidationEmail(email, setValidationResultEmail);
-        useValidationPassword(password, passwordConfirm, setValidationResultPassword);
-    }
+            if (errorPassword === true) {
+                setErrorMessage(prevState => prevState + (errorEmail ? "\n": "") + "Mot de passe non valide");
+            }
+        }
+    }, [email, password, passwordConfirm]);
+}
