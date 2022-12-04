@@ -15,7 +15,7 @@ export function PodcastCard({podcast}) {
                       <img src={podcast.artworkUrl} alt={podcast.name}/>
                   </figure>
               </div>
-              <div className="card-content">
+              <div className="card-content" style={{height: "9em"}}>
                   <div className="media">
                       <div className="media-content">
                           <p className="title is-4">{podcast.name}</p>
