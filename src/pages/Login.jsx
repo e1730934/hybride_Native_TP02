@@ -30,6 +30,7 @@ export default function Login() {
                 const data = await resToken.json();
                 setToken(data.token);
                 localStorage.setItem("token", data.token);
+                navigate("/subscriptions");
             } else {
                 setError(resToken.message);
             }

@@ -2,25 +2,59 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faLock} from "@fortawesome/free-solid-svg-icons";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {useNavigate} from "react-router-dom";
+import {useContext, useState} from "react";
+import {Context} from "../App.jsx";
 
 library.add(faEnvelope, faLock);
 
 export function ProfileComponent(props) {
     const navigate = useNavigate();
+    const [isModalActive, setIsModalActive] = useState(false);
+    const {token} = useContext(Context);
 
+    function toggleModal() {
+        setIsModalActive(!isModalActive);
+    }
     function annuler() {
         navigate("/");
     }
 
     return <div className="container">
-        <div className="section">
+        {token !== null &&
+        <div className={`modal ${isModalActive ? "is-active" : ""}`}>
+            <div className="modal-background"></div>
+            <div className="modal-card">
+                <header className="modal-card-head">
+                    <p className="modal-card-title">Supprimer le compte</p>
+                    <button className="delete" aria-label="close" onClick={toggleModal}></button>
+                </header>
+                <section className="modal-card-body">
+                    <p>Voulez-vous vraiment supprimer votre compte ?</p>
+                </section>
+                <footer className="modal-card-foot">
+                    <button className="button is-danger" onClick={props.supprimerCompte}>Oui</button>
+                    <button className="button is-success" onClick={toggleModal}>Non</button>
+                </footer>
+            </div>
+        </div>
+        }
+        {props.errorMessages !== "" &&
+          <div className="messages" tabIndex="0">
+                <div className="message is-danger" style={{
+                    whiteSpace: "pre", borderColor: "red",
+                    borderWidth: "2px", borderStyle: "solid"
+                }}>
+                    <p role="alert" className="message-body">{props.errorMessages}</p>
+                </div>
+          </div>}
+            <div className="section">
             <div className="content">
                 <main>
                     <form>
                         <div className="field">
                             <label htmlFor="email" className="label">Email</label>
                             <div className="control has-icons-left">
-                                <input id="email" type="email" defaultValue={props.defaultValues.email}
+                                <input id="email" type="email" defaultValue={props.defaultValues}
                                        placeholder="e1234567@site.com"
                                        className="input" autoComplete="email"
                                        required aria-required="true"
@@ -37,7 +71,7 @@ export function ProfileComponent(props) {
                         <div className="field">
                             <label htmlFor="password" className="label">Mot de passe</label>
                             <div className="control has-icons-left">
-                                <input id="password" type="password" defaultValue={props.defaultValues.password}
+                                <input id="password" type="password"
                                        placeholder="*******" className="input"
                                        autoComplete="password"
                                        required aria-required="true"
@@ -66,7 +100,7 @@ export function ProfileComponent(props) {
                             <label htmlFor="confirmPassword" className="label">
                                 Confirmation mot de passe</label>
                             <div className="control has-icons-left">
-                                <input id="confirmPassword" type="password" defaultValue={props.defaultValues.confirmPassword}
+                                <input id="confirmPassword" type="password"
                                        placeholder="*******" className="input"
                                        autoComplete="password"
                                        required aria-required="true"
@@ -81,11 +115,12 @@ export function ProfileComponent(props) {
                         </div>
                         <div className="field">
                             <div className="buttons">
-                                <button id="connexion" className="button is-success"
+                                <button type={"button"} id="connexion" className="button is-success"
                                         disabled={props.error}
                                         onClick={props.actionCall}> {props.actionLabel}
                                 </button>
-                                <button className="button is-danger" onClick={annuler}>Annuler</button>
+                                {token && <button type={"button"} className="button is-danger" onClick={toggleModal}>Supprimer le compte</button>}
+                                <button type={"button"} className="button is-light" onClick={annuler}>Annuler</button>
                             </div>
                         </div>
                     </form>

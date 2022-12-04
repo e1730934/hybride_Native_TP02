@@ -2,18 +2,17 @@ import React, {useState} from "react";
 import {serveur} from "../constantes.jsx";
 import {useCheckError, useValidationEmail, useValidationPassword} from "../customHooks/UseValidationProfile.jsx";
 import {ProfileComponent} from "../component/ProfileComponent.jsx";
+import {useNavigate} from "react-router-dom";
 
 
 export default function Signup() {
     const [error, setError] = useState(false);
+    const [errorMessages, setErrorMessages] = useState("");
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
-
-    const defaultValues = {
-        email: "", password: "", passwordConfirm: "",
-    };
 
     const [emailRequirementValue, setEmailRequirementValue] = useState({
         containsAt: false,
@@ -42,13 +41,13 @@ export default function Signup() {
             })
               .then((response) => {
                   if (response.ok) {
-                      //     TODO: redirect to login page
+                      navigate("/login");
                   } else {
-                      setError(response.message);
+                      setErrorMessages(response.message);
                   }
               })
               .catch((e) => {
-                  setError(`Erreur lors de l'inscription \n${e.message}`);
+                  setErrorMessages(`Erreur lors de l'inscription \n${e.message}`);
               });
         }
     }
@@ -57,6 +56,6 @@ export default function Signup() {
                               getter={{email, password, passwordConfirm}}
                               setter={{setEmail, setPassword, setPasswordConfirm}}
                               validation={{emailRequirementValue, passwordRequirementValue}}
-                              defaultValues={defaultValues} error={error}/>
+                              defaultValues={""} error={error} errorMessages={errorMessages}/>
     );
 }
