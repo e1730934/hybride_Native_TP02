@@ -10,7 +10,7 @@ export function useValidationEmail(email, setValidationResultEmail) {
             setValidationResultEmail(prevState =>
               ({...prevState, containsAt: false}));
         }
-    }, [email]);
+    }, [email, setValidationResultEmail]);
 }
 
 export function useValidationPassword(password, passwordConfirm, setValidationResultPassword) {
@@ -50,7 +50,7 @@ export function useValidationPassword(password, passwordConfirm, setValidationRe
             setValidationResultPassword(prevState =>
               ({...prevState, match: false}));
         }
-    }, [password, passwordConfirm]);
+    }, [password, passwordConfirm, setValidationResultPassword]);
 }
 
 export function useCheckError(emailRequirementValue, passwordRequirementValue, setError) {
@@ -62,5 +62,5 @@ export function useCheckError(emailRequirementValue, passwordRequirementValue, s
         } else {
             setError(true);
         }
-    }, [emailRequirementValue, passwordRequirementValue]);
+    }, [emailRequirementValue, passwordRequirementValue, setError]);
 }

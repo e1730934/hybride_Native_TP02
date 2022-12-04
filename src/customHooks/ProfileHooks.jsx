@@ -13,7 +13,6 @@ export function useGetUserInfo(token, setDefaultValues) {
                 if (response.ok) {
                     response.json().then((data) => {
                         setDefaultValues(data.email);
-                        console.log(data.email);
                     });
                 } else {
                     console.log(response);
@@ -22,5 +21,5 @@ export function useGetUserInfo(token, setDefaultValues) {
         }
 
         getUser();
-    }, []);
+    }, [setDefaultValues, token]);
 }
