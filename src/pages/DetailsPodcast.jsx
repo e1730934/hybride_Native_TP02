@@ -13,7 +13,7 @@ export default function DetailsPodcast() {
 
     return (
       <div className="section has-text-centered">
-          <div className="container">
+          <div className="container" style={{marginBottom:"20px"}}>
               <div className="columns">
                   <div className="column is-4">
                       <div className="card">
