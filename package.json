@@ -6,8 +6,7 @@
     "scripts": {
         "start": "vite",
         "lint": "eslint src/**/*.{js,jsx}",
-        "fix": "eslint --fix src/**/*.{js,jsx}",
-        "build": "vite build"
+        "fix": "eslint --fix src/**/*.{js,jsx}"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.2.1",

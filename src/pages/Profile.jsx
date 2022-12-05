@@ -4,7 +4,7 @@ import {useCheckError, useValidationEmail, useValidationPassword} from "../custo
 import {useNavigate} from "react-router-dom";
 import {Context} from "../App.jsx";
 import {serveur} from "../constantes.jsx";
-import {useGetUserInfo} from "../customHooks/ProfileHooks.jsx";
+import {useGetUserInfo} from "../customHooks/UseGetUserInfo.jsx";
 
 export default function Profile() {
     const {token, setToken} = useContext(Context);
