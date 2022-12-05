@@ -47,10 +47,12 @@ export default function DetailsPodcast() {
                                   <div className="media-content">
                                       <p className="title is-4">{podcastInfo.name}</p>
                                       <p className="subtitle is-6">{podcastInfo.artist}</p>
-                                      <button
-                                        className={`button is-rounded is-fullwidth ${isSubscribe ? "is-danger" : "is-success"}`}
-                                        onClick={toggleSubscribe}>{isSubscribe ? "Se désabonner" : "S'abonner"}
-                                      </button>
+                                      {token &&
+                                        <button
+                                          className={`button is-rounded is-fullwidth ${isSubscribe ? "is-danger" : "is-success"}`}
+                                          onClick={toggleSubscribe}>{isSubscribe ? "Se désabonner" : "S'abonner"}
+                                        </button>
+                                      }
                                       <p className="subtitle is-6 has-text-justified"
                                          style={{paddingTop: "20px"}}>{podcastInfo.description}</p>
                                       {
